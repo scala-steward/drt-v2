@@ -74,8 +74,15 @@ case class S3ApiProvider(awsCredentials: AWSCredentials, bucketName: String)(imp
             stringBuffer ++= buffer.take(len)
             len = zipInputStream.read(buffer)
           }
-          log.debug(s"$zipFileName: ${zipEntry.getName}")
-          new String(stringBuffer.toArray, UTF_8)
+
+          val content = new String(stringBuffer.toArray, UTF_8)
+
+          import java.io._
+          val pw = new PrintWriter(new File(s"/tmp/api-${zipFileName}__${zipEntry.getName}" ))
+          pw.write(content)
+          pw.close()
+
+          content
         }
         .toList
     } match {
