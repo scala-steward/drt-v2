@@ -20,6 +20,8 @@ import uk.gov.homeoffice.drt.ports.AirportConfig
 import uk.gov.homeoffice.drt.ports.Queues.Queue
 import uk.gov.homeoffice.drt.ports.Terminals.Terminal
 
+import scala.util.Random
+
 object TerminalDesksAndQueuesRow {
 
   val log: Logger = LoggerFactory.getLogger(getClass.getName)
@@ -54,7 +56,11 @@ object TerminalDesksAndQueuesRow {
 
       val queueTds = crunchMinutesByQueue.flatMap {
         case (queue, cm) =>
-          val paxLoadTd = <.td(^.className := queueColour(queue), s"${Math.round(cm.paxLoad)}")
+          val paxLoadTd = <.td(^.className := queueColour(queue), <.div(^.className := "pax-queue-nos",
+            <.div(s"${Math.round(cm.paxLoad)} ->", ^.width := "80px"),
+            <.div(s"${cm.maybePaxInQueue.map(_.toString).getOrElse("-")}", ^.width := "80px"),
+            <.div(s"${(Random.nextFloat() * 100).toInt} ->", ^.width := "80px"),
+          ))
 
           def deployDeskTd: VdomTagOf[TableCell] = <.td(
             ^.className := s"${queueColour(queue)}",
