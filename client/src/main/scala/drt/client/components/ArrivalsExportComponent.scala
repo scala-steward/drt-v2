@@ -48,7 +48,7 @@ object ArrivalsExportComponent extends WithScalaCssImplicits {
 
       <.div(
         ^.className := "export-button-wrapper",
-        MuiButton(color = Color.default, variant = "outlined", size = "medium")(
+        MuiButton(color = Color.primary, variant = "outlined", size = "medium")(
           MuiIcons(GetApp)(fontSize = "small"),
           "Arrivals",
           ^.className := "btn btn-default",

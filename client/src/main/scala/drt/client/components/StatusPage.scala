@@ -76,7 +76,7 @@ object StatusPage {
               if (feed.feedSource.name == "API")
                 <.h3(feed.feedSource.displayName(None), " ", apiDataTooltip)
               else if (manualCheckAllowed)
-                <.h3(feed.feedSource.displayName(None), " ", MuiButton(variant = "outlined", size = "medium", color = Color.default)(MuiIcons(RefreshOutlined)(), ^.onClick --> checkFeed(feed.feedSource)))
+                <.h3(feed.feedSource.displayName(None), " ", MuiButton(variant = "outlined", size = "medium", color = Color.primary)(MuiIcons(RefreshOutlined)(), ^.onClick --> checkFeed(feed.feedSource)))
               else if (isCiriumAsPortLive)
                 <.h3(feed.feedSource.displayName(Option("Live arrival")))
               else
@@ -121,8 +121,8 @@ object StatusPage {
             <.br(),
             <.h2("Crunch"),
             <.div(^.className := "crunch-actions-container",
-              MuiButton(variant = "outlined", size = "medium", color = Color.default)(<.div("Request forecast re-crunch", ^.onClick --> requestForecastRecrunch())),
-              MuiButton(variant = "outlined", size = "medium", color = Color.default)(<.div("Request splits refresh", ^.onClick --> requestSplitsRefresh())),
+              MuiButton(variant = "outlined", size = "medium", color = Color.primary)(<.div("Request forecast re-crunch", ^.onClick --> requestForecastRecrunch())),
+              MuiButton(variant = "outlined", size = "medium", color = Color.primary)(<.div("Request splits refresh", ^.onClick --> requestSplitsRefresh())),
             )
           ) else EmptyVdom
         }

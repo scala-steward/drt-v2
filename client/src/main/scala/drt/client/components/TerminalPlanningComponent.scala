@@ -73,7 +73,7 @@ object TerminalPlanningComponent {
             MuiDivider()(),
             <.div(^.className := "staffing-controls-row",
               <.span(
-                MuiButton(color = Color.default, variant = "outlined", size = "medium")(
+                MuiButton(color = Color.primary, variant = "outlined", size = "medium")(
                   MuiIcons(GetApp)(fontSize = "small"),
                   "Export Headlines",
                   ^.className := "btn btn-link muiButton",
@@ -81,7 +81,7 @@ object TerminalPlanningComponent {
                   ^.target := "_blank"
                 )),
               <.span(^.className := "planning-export",
-                MuiButton(color = Color.default, variant = "outlined", size = "medium")(
+                MuiButton(color = Color.primary, variant = "outlined", size = "medium")(
                   MuiIcons(GetApp)(fontSize = "small"),
                   "Export Week",
                   ^.className := "btn btn-link muiButton",

@@ -9,8 +9,8 @@ case class FormFieldsStyle(common: CommonStyle = DefaultCommonStyle) extends Sty
   import dsl._
 
   val textField = style(
-    marginLeft(theme.spacing.unit.px),
-    marginRight(theme.spacing.unit.px),
+//    marginLeft(theme.spacing.unit.px),
+//    marginRight(theme.spacing.unit.px),
     width(150.px),
     unsafeChild("label")(
       fontSize(1.5.rem)
@@ -37,8 +37,8 @@ case class FormFieldsStyle(common: CommonStyle = DefaultCommonStyle) extends Sty
   )
 
   val textFieldSmall = style(
-    marginLeft(theme.spacing.unit.px),
-    marginRight(theme.spacing.unit.px),
+//    marginLeft(theme.spacing.unit.px),
+//    marginRight(theme.spacing.unit.px),
     width(45.px),
     unsafeChild("label")(
       fontSize(1.5.rem)
@@ -58,7 +58,7 @@ case class FormFieldsStyle(common: CommonStyle = DefaultCommonStyle) extends Sty
   val formHelperText = style(
     unsafeChild("span")(
       fontSize(1.rem),
-      padding(1.rem),
+//      padding(1.rem),
     )
   )
 
@@ -72,7 +72,7 @@ case class FormFieldsStyle(common: CommonStyle = DefaultCommonStyle) extends Sty
   )
 
   val buttons = style(
-    marginTop(theme.spacing.unit.px)
+//    marginTop(theme.spacing.unit.px)
   )
 
   val simulationCharts = style(

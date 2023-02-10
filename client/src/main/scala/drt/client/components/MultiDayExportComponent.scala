@@ -118,7 +118,7 @@ object MultiDayExportComponent extends WithScalaCssImplicits {
 
       <.div(
         ^.className := "export-button-wrapper",
-        MuiButton(color = Color.default, variant = "outlined", size = "medium")(
+        MuiButton(color = Color.primary, variant = "outlined", size = "medium")(
           MuiIcons(GetApp)(fontSize = "small"),
           "Multi Day Export",
           ^.className := "btn btn-default",

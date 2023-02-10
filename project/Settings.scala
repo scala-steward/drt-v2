@@ -41,7 +41,7 @@ object Settings {
     val akkaStreamContrib = "0.9"
 
     val specs2 = "4.6.0"
-    val react = "17.0.2"
+    val react = "18.2.0"
 
     val bootstrap = "3.3.6"
 
@@ -75,7 +75,7 @@ object Settings {
     val slick = "3.4.1"
     val censorinus = "2.1.16"
     val janinoVersion = "3.1.6"
-    val scalaJsReactMaterialUi = "0.3.1"
+    val scalaJsReactMaterialUi = "20230210_6"
     val sprayJsonScalaJs = "1.3.5-7"
     val scalaTestVersion = "3.2.12"
   }
@@ -95,9 +95,11 @@ object Settings {
     "react-chartjs-2" -> "^4.0.0",
     "react-markdown" -> "8.0.5",
     "moment" -> ">=2.29.4",
-    "@material-ui/core" -> "3.9.4",
-    "@material-ui/icons" -> "3.0.2",
-    "@material-ui/lab" -> "3.0.0-alpha.30"
+    "@mui/material" -> "5.11.8",
+    "@mui/icons-material" -> "5.11.0",
+    "@mui/lab" -> "5.0.0-alpha.119",
+    "@emotion/react" -> "^11.10.5",
+    "@emotion/styled" -> "^11.10.5",
   )
 
   /** Dependencies only used by the JS project (note the use of %%% instead of %%) */
