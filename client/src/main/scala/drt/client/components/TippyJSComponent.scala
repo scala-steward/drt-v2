@@ -94,8 +94,7 @@ object Tippy extends ScalaCssReactImplicits {
   case class Props(content: VdomElement, interactive: Boolean, trigger: VdomNode, triggerEvent: String, maybeOnClick: Option[ReactEventFromInput => Callback]) extends UseValueEq
 
   val component = ScalaComponent.builder[Props]("FlightChart")
-    .render_P(props => {
-
+    .render_P { props =>
       val trigger = props.maybeOnClick match {
         case Some(onClick) => <.span(
           ^.className := "tooltip-trigger-onclick",
@@ -113,7 +112,7 @@ object Tippy extends ScalaCssReactImplicits {
       val plugins: js.Array[js.Any] = js.Array(new HideOnEsc())
 
       TippyJSComponent(props.content.rawElement, props.interactive, triggerWithTabIndex, plugins, props.triggerEvent)
-    })
+    }
     .build
 
   def apply(content: VdomElement, interactive: Boolean, trigger: VdomNode, triggerEvent: String = TriggerEvents.focus, triggerCallback: Option[ReactEventFromInput => Callback] = None) =

@@ -107,10 +107,23 @@ object FlightTableRow {
       val ctaOrRedListMarker = if (flight.Origin.isDomesticOrCta) "*" else ""
       val flightCodes = s"${allCodes.mkString(" - ")}$ctaOrRedListMarker"
 
-      val estimatedContent = (flight.Estimated, flight.predictedTouchdown, props.airportConfig.useTimePredictions) match {
-        case (None, Some(value), true) => maybeLocalTimeWithPopup(Option(value), Option("Predicted touchdown based on recent patterns"))
-        case _ => maybeLocalTimeWithPopup(flight.Estimated)
+      val times = Seq(
+        "Predicted" -> (if (props.airportConfig.useTimePredictions) flight.predictedTouchdown else None),
+        "Estimated" -> flight.Estimated,
+        "Touchdown" -> flight.Actual,
+        "Estimated Chox" -> flight.EstimatedChox,
+        "Actual Chox" -> flight.ActualChox,
+      ).collect {
+        case (name, Some(time)) => name -> time
       }
+
+      val timesPopUp = times.map(t => <.div(
+        <.span(^.display := "inline-block", ^.width := "120px", t._1), <.span(SDate(t._2).toLocalDateTimeString().takeRight(5))
+      )).toTagMod
+
+
+      val expectedContent = maybeLocalTimeWithPopup(times.reverse.headOption.map(_._2), Option(timesPopUp), None)
+
       val firstCells = List[TagMod](
         <.td(^.className := flightCodeClass,
           <.div(
@@ -141,16 +154,13 @@ object FlightTableRow {
         <.td(gateOrStand(flight, props.airportConfig, props.directRedListFlight.paxDiversion)),
         <.td(^.className := "no-wrap", flight.displayStatus.description),
         <.td(maybeLocalTimeWithPopup(Option(flight.Scheduled))),
-        <.td(estimatedContent),
-        <.td(maybeLocalTimeWithPopup(flight.Actual)),
+        <.td(expectedContent),
       )
-      val estCell = List(<.td(maybeLocalTimeWithPopup(flight.EstimatedChox)))
       val lastCells = List[TagMod](
-        <.td(maybeLocalTimeWithPopup(flight.ActualChox)),
         <.td(pcpTimeRange(flightWithSplits, props.airportConfig.firstPaxOffMillis), ^.className := "arrivals__table__flight-est-pcp"),
         <.td(^.className := s"pcp-pax ${paxFeedSourceClass(flightWithSplits.pcpPaxEstimate)}", FlightComponents.paxComp(flightWithSplits, props.directRedListFlight, flight.Origin.isDomesticOrCta))
       )
-      val flightFields = if (props.hasEstChox) firstCells ++ estCell ++ lastCells else firstCells ++ lastCells
+      val flightFields = if (props.hasEstChox) firstCells ++ lastCells else firstCells ++ lastCells
 
       val paxClass = FlightComponents.paxClassFromSplits(flightWithSplits)
 

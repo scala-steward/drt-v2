@@ -110,7 +110,6 @@ object FlightTable {
 
   def tableHead(props: Props, timelineTh: TagMod, queues: Seq[Queue], redListPaxExist: Boolean): TagOf[TableSection] = {
     val redListHeading = "Red List Pax"
-    val estChoxHeading = "Est Chox"
 
     val columns = List(
       ("Flight", Option("arrivals__table__flight-code")),
@@ -119,18 +118,12 @@ object FlightTable {
       (redListHeading, None),
       ("Gate / Stand", Option("gate-stand")),
       ("Status", Option("status")),
-      ("Sch", None),
-      ("Est", None),
-      ("Act", None),
-      (estChoxHeading, None),
-      ("Act Chox", None),
+      ("Scheduled", None),
+      ("Expected", None),
       ("Est PCP", Option("arrivals__table__flight-est-pcp")),
       ("Est PCP Pax", Option("arrivals__table__flight__pcp-pax__header")))
 
     val portColumnThs = columns
-      .filter {
-        case (label, _) => label != estChoxHeading || props.hasEstChox
-      }
       .filter {
         case (label, _) => label != redListHeading || (props.displayRedListInfo && redListPaxExist)
       }
