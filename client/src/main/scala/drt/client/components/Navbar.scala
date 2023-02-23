@@ -2,7 +2,7 @@ package drt.client.components
 
 import diode.data.{Empty, Pot}
 import drt.client.SPAMain.{ContactUsLoc, Loc, TerminalPageTabLoc}
-import drt.client.actions.Actions.SetSnackbarMessage
+import drt.client.actions.Actions.{LogOut, SetSnackbarMessage}
 import drt.client.modules.GoogleEventTracker
 import drt.client.services.SPACircuit
 import drt.shared.FeedSourceStatuses
@@ -29,6 +29,11 @@ object Navbar {
 
   def handleClose: (ReactEvent, String) => Callback = (_, _) => {
     Callback(SPACircuit.dispatch(SetSnackbarMessage(Empty)))
+  }
+
+  private def handleLogOut(config: AirportConfig, user: LoggedInUser): Callback = Callback {
+    GoogleEventTracker.sendEvent(config.portCode.toString, "Log Out", user.id)
+    SPACircuit.dispatch(LogOut(user))
   }
 
   val component: Component[Props, State, Unit, CtorType.Props] = ScalaComponent.builder[Props]("NavBar")
@@ -72,8 +77,10 @@ object Navbar {
                 MainMenu(props.ctl, props.page, navbarModel.feedStatuses.getOrElse(Seq()), props.airportConfig, props.loggedInUser),
                 <.div(^.className := "main-menu-items",
                   <.div(^.className := "contact-us-link", props.ctl.link(ContactUsLoc)(Icon.envelope, " ", "Contact Us")),
-                  <.div(<.a(Icon.signOut, "Log Out", ^.href := "/oauth/logout?redirect=" + BaseUrl.until_#.value,
-                    ^.onClick --> Callback(GoogleEventTracker.sendEvent(props.airportConfig.portCode.toString, "Log Out", props.loggedInUser.id))))
+//                  <.div(<.a(Icon.signOut, "Log Out", ^.href := "/oauth/logout?redirect=" + BaseUrl.until_#.value,
+//                    ^.onClick --> Callback(GoogleEventTracker.sendEvent(props.airportConfig.portCode.toString, "Log Out", props.loggedInUser.id)))),
+                  <.div(<.span(Icon.signOut, "Log Out", ^.href := "/oauth/logout?redirect=" + BaseUrl.until_#.value,
+                    ^.onClick --> handleLogOut(props.airportConfig, props.loggedInUser)))
                 ))
             else EmptyVdom
           )

@@ -264,12 +264,6 @@ object SPAMain {
     staticRoute(root, UserDashboardLoc) ~> renderR((router: RouterCtl[Loc]) => UserDashboardPage(router))
   }
 
-  def contactUsRoute(dsl: RouterConfigDsl[Loc, Unit]): dsl.Rule = {
-    import dsl._
-
-    staticRoute(root, ContactUsLoc) ~> renderR(_ => ContactPage())
-  }
-
   def statusRoute(dsl: RouterConfigDsl[Loc, Unit]): dsl.Rule = {
     import dsl._
 

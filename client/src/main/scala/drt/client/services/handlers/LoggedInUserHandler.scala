@@ -2,14 +2,14 @@ package drt.client.services.handlers
 
 import diode.data.{Pot, Ready}
 import diode.{ActionResult, Effect, ModelRW}
-import uk.gov.homeoffice.drt.auth.{LoggedInUser, Roles}
 import drt.client.SPAMain
 import drt.client.actions.Actions._
 import drt.client.logger.log
-
+import japgolly.scalajs.react.extra.router.BaseUrl
 import org.scalajs.dom
 import org.scalajs.dom.XMLHttpRequest
 import ujson.Value
+import uk.gov.homeoffice.drt.auth.{LoggedInUser, Roles}
 import upickle.default._
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -46,7 +46,16 @@ class LoggedInUserHandler[M](modelRW: ModelRW[M, Pot[LoggedInUser]]) extends Log
         SetLoggedInUser(loggedInUser)
       }
       )))
+
     case SetLoggedInUser(loggedInUser) =>
       updated(Ready(loggedInUser))
+
+    case LogOut(user) =>
+      user.portRoles.foreach { portRole =>
+        val url = SPAMain.urls.urlForPort(portRole.name.toLowerCase) + "/oauth/logout"
+        log.info(s"Logging out user ${user.userName} from port ${portRole.name} at $url")
+        dom.ext.Ajax.get(url = url)
+      }
+      noChange
   }
 }
